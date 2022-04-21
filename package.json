@@ -1,0 +1,19 @@
+{
+  "name": "backend-e-commerce",
+  "version": "1.0.0",
+  "description": "Backend uso",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xBerin7/Backend-E-Commerce.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xBerin7/Backend-E-Commerce/issues"
+  },
+  "homepage": "https://github.com/xBerin7/Backend-E-Commerce#readme"
+}
