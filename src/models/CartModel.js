@@ -1,39 +1,36 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const productSchema = new Schema({
-  category: {
+const carritoSchema = new Schema({
+    category: {
     type: String,
     required: true,
     min: 70,
     max: 100
   },
-  title: {
+  products: {
     type: String,
     required: true,
     min: 70,
     max: 100
   },
-  features: {
+  details: {
     type: String,
     required: true,
     min: 700,
     max: 1200
   },
-  details: {
+  prices: {
     type: String,
     required: true,
     min: 400,
     max: 450
   },
-  foto: {
-    type: String
+  totalPrice: {
+    type: String,
+    required: true,
     // Pronto BETA TEST required//
   },
-  price: {
-    type: Number,
-    required: true
-  },
-  alternativePrice: {
+  alternativeTotalPrice: {
     type: Number
   },
   isOffert: {
@@ -42,6 +39,6 @@ const productSchema = new Schema({
   }
 
 })
-const Product = mongoose.model('Product', productSchema)
+const Carrito = mongoose.model('Carrito', carritoSchema)
 
-module.export = Product
+module.export = Carrito

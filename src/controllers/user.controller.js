@@ -1,13 +1,15 @@
 const Joi = require('joi')
+const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const STATUS = require('../utils/status')
-const User = require('../middleware/ValidateToken.js')
+const User = require('../models/UserModel')
 
 //! MOVER A HELPERS
 const validateLogin = Joi.object({
   email: Joi.string().max(120).email(),
   password: Joi.string().min(6).max(25).required()
 })
+
 //! MOVER A HELPERS
 
 //! MOVER A HELPERS
@@ -21,15 +23,31 @@ const schemaRegister = Joi.object({
 //! MOVER A HELPERS
 
 module.exports = {
-  userLogin (req, res) {
+  async userLogin (req, res) {
+    const { email, password } = req.body
     const { error } = validateLogin.validate(req.body)
     if (error) {
-      res.status(STATUS.BAD_REQUEST).json({
+      return res.status(STATUS.BAD_REQUEST).json({
         error: true,
         message: 'Error al iniciar sesion',
         nativeError: error
       })
     }
+    const user = await User.findOne({ email })
+    if (!user) return res.status(400).json({ error: true, message: 'Usuario no encontrado', nativeError: error })
+
+    const validPassword = await bcrypt.compare(password, user.password)
+    if (!validPassword) return res.status(400).json({ error: true, message: 'Contraseña no valida', nativeError: error })
+
+    const token = jwt.sign({
+      userEmail: email
+    }, process.env.TOKEN_SECRET)
+
+    res.json({
+      error: false,
+      message: 'Usuario logeado correctamente',
+      data: token
+    })
   },
   async userRegister (req, res) {
     const { body } = req
