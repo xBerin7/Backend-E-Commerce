@@ -1,13 +1,19 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 const productSchema = new Schema({
+    category:{
+        type:String,
+        required:true,
+        min:70,
+        max:100
+    },
     title:{
         type: String,
         required: true,
         min: 70,
         max: 100
     },
-    body:{
+    features:{
         type: String,
         required: true,
         min: 700,
@@ -29,6 +35,10 @@ const productSchema = new Schema({
     },
     alternativePrice:{
         type:Number
+    },
+    isOffert:{
+        type: Boolean,
+        default: false
     }
     
 })

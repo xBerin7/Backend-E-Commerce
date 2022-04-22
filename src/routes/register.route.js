@@ -1,11 +1,8 @@
-const router = require('express').Router()
-const User =  require('../models/ValidateToken')
-const res = require('express/lib/response')
-const Joi = require('joi')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+const { Router } = require('express')
 const userController = require('../controllers/user.controller')
 
-router.post('/register', userController.userRegister)
+const register = Router()
 
-module.exports= router
+register.post('/', userController.userRegister)
+
+module.exports = register

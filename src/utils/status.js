@@ -1,0 +1,15 @@
+module.exports = {
+    'CONTINUE': 100,
+    'OK': 200,
+    'CREATED': 201,
+    'ACCEPTED': 202,
+    'NON_AUTHORITED_INFORMATION': 203,
+    'BAD_REQUEST': 400,
+    'UNAUTHORIZED': 401,
+    'PAYMENT_REQUIRED': 402,
+    'FORBIDEN': 403,
+    'NOT_FOUND': 404,
+    'METHOD_NOT_ALLOWED': 405,
+    'GONE': 410,
+    'METHOD_FAILURE': 420,
+}

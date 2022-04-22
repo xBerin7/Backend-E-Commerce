@@ -10,9 +10,8 @@ fs.readdirSync(__dirname).forEach((file) => {
     const files = removeExtension(file)
     const SKIP = ['index'].includes(files)
     if(!SKIP) {
-        indexRoute.use(`/${file}`, require(`/${file}`))
+        indexRoute.use(`/${files}`, require(`./${file}`))
     }
 })
 
 module.exports = indexRoute
-
