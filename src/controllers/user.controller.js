@@ -16,7 +16,7 @@ const validateLogin = Joi.object({
 const schemaRegister = Joi.object({
   name: Joi.string().min(6).max(23).required(),
   lastname: Joi.string().min(6).max(23).required(),
-  email: Joi.string().max(120).email(),
+  email: Joi.string().max(120).email().required(),
   password: Joi.string().min(6).max(25).required(),
   cp: Joi.string().min(2).max(10)
 })
@@ -50,8 +50,7 @@ module.exports = {
     })
   },
   async userRegister (req, res) {
-    const { body } = req
-    const { error } = schemaRegister.validate(body)
+    const { error } = schemaRegister.validate(req.body)
     if (error) {
       return res.status(STATUS.BAD_REQUEST).json({
         error: true,
@@ -62,17 +61,16 @@ module.exports = {
     const emailExist = await User.findOne({ email: req.body.email })
     if (emailExist) return res.status(STATUS.BAD_REQUEST).json({ error: true, message: 'El email ya existe', nativeError: error })
 
-    const rounds = await bcrypt.gentSalt(10)
+    const rounds = await bcrypt.genSalt(10)
     const password = await bcrypt.hash(req.body.password, rounds)
-
+    const userDB = new User({
+      name:req.body.name,
+      lastname:req.body.lastname,
+      email:req.body.email,
+      password,
+      cp:req.body.cp
+    })
     try {
-      const userDB = new User({
-        name: req.body.name,
-        lastname: req.body.lastname,
-        email: req.body.email,
-        password,
-        cp: req.body.cp
-      })
       await userDB.save()
       console.log(`Usuario nuevo registrado:${userDB}`)
       res.json({

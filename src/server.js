@@ -8,7 +8,7 @@ server.name = 'API-ECOMM'
 
 server.use(json({ limit: '50mb' }))
 server.use(morgan('dev'))
-server.use('/',  require('./routes/index.route.js'))
+server.use('/', require('./routes/index.route.js'))
 server.use('/user/:id', ValidateToken, require('./routes/index.route.js'))
 
 // Endware
