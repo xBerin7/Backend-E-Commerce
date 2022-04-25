@@ -1,8 +1,22 @@
 const mongoose = require('mongoose')
 const Product = require('../models/ProductsModel')
 
+
 module.exports = {
   async createProduct (req, res) {
+    const schemaProduct =Joi.object({
+      category:Joi.string().max(50).required(),
+      title:Joi.string().max(50).required(),
+      body:Joi.string().max(300).required(),
+      details:Joi.string().max(360).required(),
+      foto:Joi.string(),
+      price:Joi.number().required(),
+      alternativePrice:Joi.number().required()
+  
+      
+    })
+    const {error}=schemaProduct.validate(req.body)
+    if(error)return res.json({error:true,message:"Rellene correctamente los campos",nativeError:error})
     const body = req.body
     try {
       await Product.create(body)
@@ -13,7 +27,7 @@ module.exports = {
     } catch (error) {
       res.json({
         error: true,
-        message: 'Error al registarr el producto',
+        message: 'Error al registrar el producto',
         nativeError: error
       })
     }
