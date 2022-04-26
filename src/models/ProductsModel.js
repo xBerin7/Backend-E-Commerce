@@ -4,25 +4,25 @@ const productSchema = new Schema({
   category: {
     type: String,
     required: true,
-    min: 70,
+    min: 7,
     max: 100
   },
   title: {
     type: String,
     required: true,
-    min: 70,
+    min: 5,
     max: 100
   },
   features: {
     type: String,
     required: true,
-    min: 700,
+    min: 7,
     max: 1200
   },
   details: {
     type: String,
     required: true,
-    min: 400,
+    min: 5,
     max: 450
   },
   foto: {
