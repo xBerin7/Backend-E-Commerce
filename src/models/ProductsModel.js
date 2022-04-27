@@ -36,6 +36,10 @@ const productSchema = new Schema({
   alternativePrice: {
     type: Number
   },
+  inCart:{
+    type:Boolean,
+    default:false
+  },
   isOffert: {
     type: Boolean,
     default: false
@@ -44,4 +48,4 @@ const productSchema = new Schema({
 })
 const Product = mongoose.model('Product', productSchema)
 
-module.export = Product
+module.exports = Product
