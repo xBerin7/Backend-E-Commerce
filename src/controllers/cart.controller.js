@@ -58,5 +58,22 @@ module.exports={
                 nativeError:error
             })
         }
+    },
+    async deleteProductCart(req,res){
+        try{
+            Cart.findByIdAndDelete(req.body.productId)
+            Product.findByIdAndUpdate(req.body.productId,{inCart:false})
+            res.json({
+                error:false,
+                message:"Producto eliminado"
+            })
+        }catch(error){
+            res.json({
+                error:true,
+                message:"No se pudo eliminar",
+                nativeError:error
+            })
+        }
+        
     }
 }
