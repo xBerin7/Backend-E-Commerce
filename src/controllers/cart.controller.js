@@ -60,9 +60,12 @@ module.exports={
         }
     },
     async deleteProductCart(req,res){
-        try{
-            Cart.findByIdAndDelete(req.body.productId)
-            Product.findByIdAndUpdate(req.body.productId,{inCart:false})
+        const collection= await Cart.findById({_id:req.body.cartId})
+        const productToRemove = await collection.products.find(producto =>producto.id== req.body.productId)
+            try{
+            await collection.products.pull(productToRemove)
+            savedDocument = collection.save()
+           await Product.findByIdAndUpdate(req.body.productId,{inCart:false})
             res.json({
                 error:false,
                 message:"Producto eliminado"
