@@ -40,7 +40,7 @@ module.exports={
         const isCart= await Cart.findById({_id:req.body.cartId})
         if(!isCart)return res.json({error:true,message:"El carrito no existe"})
         const isProduct =await Product.findById({_id:req.body.productId})
-        if(isProduct)return res.json({error:true,message:"El producto no existe"})
+        if(!isProduct)return res.json({error:true,message:"El producto no existe"})
         await Product.findByIdAndUpdate(req.body.productId,{inCart:true})
         console.log(isCart,isProduct)
         const productDB= await Product.findById({_id:req.body.productId})
