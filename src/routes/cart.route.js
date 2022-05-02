@@ -1,8 +1,9 @@
 const cart = require('express').Router()
 const cartController = require('../controllers/cart.controller.js')
+const ValidateToken = require('../middleware/ValidateToken')
 
-cart.get('/', cartController.getCart)
-cart.post('/add',cartController.updateCart)
-cart.post('/delete',cartController.deleteProductCart)
+cart.get('/', ValidateToken,cartController.getCart)
+cart.post('/add',ValidateToken,cartController.updateCart)
+cart.post('/delete',ValidateToken,cartController.deleteProductCart)
 
 module.exports = cart
