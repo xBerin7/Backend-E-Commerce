@@ -4,7 +4,7 @@ const User = require ('../models/UserModel')
 const Product = require('../models/ProductsModel')
 
 module.exports={
-    async getCart(req,res){
+    async getCart(req,res) {
         const userExist = await User.findOne({ _id: req.body.iduser })
         if (!userExist) return res.json({ error: true, message: 'El usuario no existe' })
 
@@ -40,8 +40,9 @@ module.exports={
         const isCart= await Cart.findById({_id:req.body.cartId})
         if(!isCart)return res.json({error:true,message:"El carrito no existe"})
         const isProduct =await Product.findById({_id:req.body.productId})
-        if(!isProduct)return res.json({error:true,message:"El producto no existe",nativeError:error})
+        if(isProduct)return res.json({error:true,message:"El producto no existe"})
         await Product.findByIdAndUpdate(req.body.productId,{inCart:true})
+        console.log(isCart,isProduct)
         const productDB= await Product.findById({_id:req.body.productId})
         try{
             await Cart.findByIdAndUpdate(req.body.cartId,{products:productDB})
