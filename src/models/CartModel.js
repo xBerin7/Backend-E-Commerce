@@ -2,10 +2,10 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const carritoSchema = new Schema(
   {
-    userId: {
+    iduser: {
       type: String
     },
-    productId:{
+    productsId:{
       type:String
     },
     products: [
@@ -16,6 +16,10 @@ const carritoSchema = new Schema(
         price: Number
       }
     ],
+    totalPrice:{
+      type:Number,
+      default:0
+    },
     modifiedOn: {
       type: Date,
       default: Date.now

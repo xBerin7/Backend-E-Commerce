@@ -33,6 +33,10 @@ const userSchema = new Schema({
     type: String,
     minleght: 20
   },
+  idcart:{
+    type:Number,
+    default:666
+  },
   date: {
     type: Date,
     default: Date.now
