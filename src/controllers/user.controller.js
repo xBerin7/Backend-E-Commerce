@@ -25,6 +25,9 @@ const schemaRegister = Joi.object({
 module.exports = {
   async userLogin (req, res) {
     const { email, password } = req.body
+    if(!email)return res.status(400).json({error: true,message:"Introduce un email"})
+    if(!password)return res.status(400).json({error: true,message:"Introduce un password"})
+    
     const { error } = validateLogin.validate(req.body)
     if (error) {
       return res.status(STATUS.BAD_REQUEST).json({
@@ -41,7 +44,7 @@ module.exports = {
 
     const token = jwt.sign({
       userEmail: email
-    }, process.env.TOKEN_SECRET)
+    }, process.env.TOKEN_SECRET,{expiresIn:"24h"})
 
     res.json({
       error: false,

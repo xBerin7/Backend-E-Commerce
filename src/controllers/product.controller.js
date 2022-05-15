@@ -19,10 +19,11 @@ module.exports = {
     const {error}=schemaProduct.validate(req.body)
     if(error)return res.json({error:true,message:"Rellene correctamente los campos",nativeError:error})
     try {
-      await Product.create(req.body)
+     const productInDB= await Product.create(req.body)
       res.json({
         error: false,
-        message: 'Producto registrado correctamente'
+        message: 'Producto registrado correctamente',
+        data:productInDB._id
       })
     } catch (error) {
       res.status(400).json({
@@ -49,9 +50,10 @@ module.exports = {
     }
   },
   async getProductById (req, res) {
-    const id = req.params.id
+    const productCheck = req.params.id
+    if(!productCheck)return res.json({error:true,message:"Introduce un id de producto"})
     try {
-      const productDB = await Product.findById({ _id: id })
+      const productDB = await Product.findById({ _id: req.params.id })
       if (productDB) {
         res.json({
           error: false,
@@ -70,10 +72,13 @@ module.exports = {
 
   async editProduct (req, res) {
     const body = req.body
-    const id = req.params.id
+    if(!body)return res.json({error:true,message:"Introduce el producto editado"})
+    const productCheck = req.params.id
+    if(!productCheck)return res.json({error:true,message:"Introduce un id de producto"})
+    
     try {
       const productDB = await Product.FindByIdAndUpdate(
-        id, body, { useFindAndModify: false }
+        req.params.id, body, { useFindAndModify: false }
       )
       res.json({
         error: false,
@@ -88,9 +93,10 @@ module.exports = {
     }
   },
   async deleteProduct (req, res) {
-    const id = req.params.id
+    const productCheck = req.params.id
+    if(!productCheck)return res.json({error:true,message:"Introduce un id de producto"})
     try {
-      const productDB = await Product.findByIdAndDelete({ _id: id })
+      const productDB = await Product.findByIdAndDelete({ _id: req.params.id})
       if (productDB) {
         res.json({
           error: false,

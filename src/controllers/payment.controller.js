@@ -4,6 +4,10 @@ const Cart = require('../models/CartModel')
 const Product = require ('../models/ProductsModel')
 module.exports={
     async createOrder(req,res){
+        const cartCheck = req.body.cartId
+        if(!cartCheck)return res.json({error:true,message:"Introduce un id de carrito"})
+        const productCheck= req.body.productId
+        if(!productCheck)return res.json({error:true,message:"Introduce un id de producto"})
         const cartDB= await Cart.findById({_id:req.body.cartId})
        if(!cartDB)return res.json({error:true,message:"Ingrese el id del carrito"})
         const productDB = await Product.findById({_id:req.body.productId})
