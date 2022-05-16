@@ -23,34 +23,32 @@ La API cuenta con 5 rutas principales:
  Al momento de hacer alguna peticion referida al usuario en el cuerpo de la peticion se debe mandar por SEPARADO cada elemento correspondiente,no encapsular todo en un array/objeto.
  **Ej Request Registro** 
 
- Method:"POST",
+```Method:"POST",
  Body:{
      name:name,
      lastname:lastname,
      email:email
-     password:password
-
- }
+     password:password}```
  *Respuesta:*
- {
+ ```{
   "error": false,
   "message": "Usuario registrado"
-}
+}```
 **Ej Request Login**
-Method:"POST"
+```Method:"POST"
 Body:{
     "email":"Example@example.com",
     "password":"123456"
-}
+}```
 *Respuesta:*
-{
+```{
   "error": false,
   "message": "Usuario logeado correctamente",
   "data": {
     "token": "exampleToken",
     "iduser": "xxxxxxxxxxxxxxx"
   }
-}
+}```
 *Guardar el token*
 
                         ###PRODUCTS
@@ -89,33 +87,33 @@ Campos requeridos :
                     
 ######/cart/ "GET" : Obtiene el carrito del usuarios.
     Ejemplo de request :
-Body:{
+```Body:{
     iduser,
     cartId
-}                 
+}   ```              
 ######/cart/create  "POST" : Crea el carrito para el usuario(Crear cuando el usuario se registra)
      *Devuelve una id de carrito*
      
 ######/cart/add  "POST" : Agrega un nuevo producto al carrito del usuario.Requiere:
-Body:{
+```Body:{
     iduser,
     cartId,
     productId
-}
+}```
 ######/cart/delete  "POST" :Elimina un producto del carrito del usuarios .Requiere:
-Body:{
+```Body:{
     iduser,
     cartId,
     productId
-}
+}```
 
                             ####PAYMENT
                             
                             
 ######/payment/createOrder  "POST" :Crea una orden para el pago del usuario.Requiere
-Body:{
+```Body:{
     cartId OR ProductId,
-}
+}```
 ######/payment/captureOrder  "GET" :Captura la orden (Al finalizar redireccionar al usuario)
 
 
