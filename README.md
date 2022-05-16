@@ -1,5 +1,5 @@
 # Backend-E-Commerce
-           ##                Presentacion :
+                          Presentacion :
 La API cuenta con 5 rutas principales:
 **Register**
 **Login**
@@ -7,14 +7,15 @@ La API cuenta con 5 rutas principales:
 **Cart**
 **Payment**
 
-                     ###Respuestas de la API 
+                     Respuestas de la API 
                      
                      
 **LA RESPUESTA DE LA API SOLO CONTIENE  4 POSIBLES CAMPOS**
--error TRUE OR FALSE (muestra si la respuesta fue correcta o no).
--messsage Devuelve un mensaje en español  que puede ser mostrado al usuario o no.
--data Contiene la informacion requerida.
--nativeError(Solo algunos request lo tienen)muestra el error completo.
+``
+error: TRUE OR FALSE (muestra si la respuesta fue correcta o no).
+messsage: Devuelve un mensaje en español  que puede ser mostrado al usuario o no.
+data: Contiene la informacion requerida.
+nativeError: (Solo algunos request lo tienen)muestra el error completo.``
                              ###Rutas
                              
                          LOGIN/REGISTER:
@@ -23,42 +24,42 @@ La API cuenta con 5 rutas principales:
  Al momento de hacer alguna peticion referida al usuario en el cuerpo de la peticion se debe mandar por SEPARADO cada elemento correspondiente,no encapsular todo en un array/objeto.
  **Ej Request Registro** 
 
-```Method:"POST",
+``Method:"POST",
  Body:{
      name:name,
      lastname:lastname,
      email:email
-     password:password}```
+     password:password}``
  *Respuesta:*
- ```{
+ ``{
   "error": false,
   "message": "Usuario registrado"
-}```
+}``
 **Ej Request Login**
-```Method:"POST"
-Body:{
+Method:"POST"
+``Body:{
     "email":"Example@example.com",
     "password":"123456"
-}```
+}``
 *Respuesta:*
-```{
+``{
   "error": false,
   "message": "Usuario logeado correctamente",
   "data": {
     "token": "exampleToken",
     "iduser": "xxxxxxxxxxxxxxx"
   }
-}```
+}``
 *Guardar el token*
 
-                        ###PRODUCTS
+                        PRODUCTS
                         
                         
-######/products  "GET" : Devuelve todos los productos
-######/products/id:  "GET" : Devuelve el producto con esa id
+*/products* "GET" : Devuelve todos los productos
+*/products/id:*  "GET" : Devuelve el producto con esa id
             *Admin*:
-######/products/create  "POST" :Crea nuevo producto con los siguientes campos requeridos *Only ADMIN*
-Campos requeridos : 
+*/products/create*  "POST" :Crea nuevo producto con los siguientes campos requeridos *Only ADMIN*
+``Campos requeridos : 
 
 *category:String,*
 *title:String,*
@@ -68,10 +69,10 @@ Campos requeridos :
 *price:Number,*
 *alternativePrice:Number,*
 *InCart:Boolean,*
-*isOffert:Boolean*
+*isOffert:Boolean*``
 
-######/products/edit/:id  "PUT" : Permite modificar un producto *Only ADMIN*
-
+*/products/edit/:id*  "PUT" : Permite modificar un producto *Only ADMIN*
+``Campos requeridos:
 *category:String,*
 *title:String,*
 *features:String,*
@@ -80,41 +81,45 @@ Campos requeridos :
 *price:Number,*
 *alternativePrice:Number,*
 *InCart:Boolean,*
-*isOffert:Boolean*
+*isOffert:Boolean*``
 
-                    #####CART
+                    CART
                     
                     
-######/cart/ "GET" : Obtiene el carrito del usuarios.
+*/cart/* "GET" : Obtiene el carrito del usuarios.
     Ejemplo de request :
-```Body:{
+``Body:{
     iduser,
     cartId
-}   ```              
-######/cart/create  "POST" : Crea el carrito para el usuario(Crear cuando el usuario se registra)
+}``              
+*/cart/create*  "POST" : Crea el carrito para el usuario(Crear cuando el usuario se registra)
      *Devuelve una id de carrito*
      
-######/cart/add  "POST" : Agrega un nuevo producto al carrito del usuario.Requiere:
-```Body:{
-    iduser,
-    cartId,
-    productId
-}```
-######/cart/delete  "POST" :Elimina un producto del carrito del usuarios .Requiere:
-```Body:{
-    iduser,
-    cartId,
-    productId
-}```
+*/cart/add¨*  "POST" : Agrega un nuevo producto al carrito del usuario.Requiere:
 
-                            ####PAYMENT
+``Body:{
+    iduser,
+    cartId,
+    productId
+}``
+
+*/cart/delete*  "POST" :Elimina un producto del carrito del usuarios .Requiere:
+
+``Body:{
+    iduser,
+    cartId,
+    productId
+}``
+
+                            PAYMENT
                             
                             
-######/payment/createOrder  "POST" :Crea una orden para el pago del usuario.Requiere
-```Body:{
+*/payment/createOrder*  "POST" :Crea una orden para el pago del usuario.Requiere
+``Body:{
     cartId OR ProductId,
-}```
-######/payment/captureOrder  "GET" :Captura la orden (Al finalizar redireccionar al usuario)
+}``
+
+*/payment/captureOrder*  "GET" :Captura la orden (Al finalizar redireccionar al usuario)
 
 
 
