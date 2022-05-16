@@ -18,7 +18,7 @@ data: Contiene la informacion requerida.
 nativeError: (Solo algunos request lo tienen)muestra el error completo.``
                              ###Rutas
                              
-                         LOGIN/REGISTER:
+                                  REGISTRO
              
          *Peticiones hacia la base de datos (Login/Registro):*
  Al momento de hacer alguna peticion referida al usuario en el cuerpo de la peticion se debe mandar por SEPARADO cada elemento correspondiente,no encapsular todo en un array/objeto.
@@ -29,20 +29,24 @@ nativeError: (Solo algunos request lo tienen)muestra el error completo.``
      name:name,
      lastname:lastname,
      email:email
-     password:password}``
+     password:password}
  *Respuesta:*
- ``{
+ {
   "error": false,
   "message": "Usuario registrado"
 }``
-**Ej Request Login**
-Method:"POST"
-``Body:{
+
+
+                            LOGIN
+                            
+                            
+``Method:"POST"
+Body:{
     "email":"Example@example.com",
     "password":"123456"
-}``
+}
 *Respuesta:*
-``{
+{
   "error": false,
   "message": "Usuario logeado correctamente",
   "data": {
@@ -72,6 +76,8 @@ Method:"POST"
 *isOffert:Boolean*``
 
 */products/edit/:id*  "PUT" : Permite modificar un producto *Only ADMIN*
+
+
 ``Campos requeridos:
 *category:String,*
 *title:String,*
@@ -83,12 +89,14 @@ Method:"POST"
 *InCart:Boolean,*
 *isOffert:Boolean*``
 
+
+
                     CART
                     
                     
 */cart/* "GET" : Obtiene el carrito del usuarios.
-    Ejemplo de request :
-``Body:{
+ ``   Ejemplo de request :
+Body:{
     iduser,
     cartId
 }``              
