@@ -25,10 +25,6 @@ const productSchema = new Schema({
     min: 5,
     max: 450
   },
-  amount:{
-    type:Number,
-    default:1
-  },
   foto: {
     type: String
     // Pronto BETA TEST required//

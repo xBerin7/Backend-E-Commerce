@@ -11,6 +11,7 @@ module.exports = {
       features:Joi.string().max(300).required(),
       details:Joi.string().max(360).required(),
       foto:Joi.string(),
+      amount:Joi.number(),
       price:Joi.number().required(),
       alternativePrice:Joi.number().required()
   

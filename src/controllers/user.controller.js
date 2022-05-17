@@ -49,7 +49,10 @@ module.exports = {
     res.json({
       error: false,
       message: 'Usuario logeado correctamente',
-      data: token
+      data: {
+        token,
+        iduser:user._id
+      }
     })
   },
   async userRegister (req, res) {
