@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Product = require('../models/ProductsModel')
-const Joi = require('Joi')
+const Joi = require("joi")
 
 
 module.exports = {
