@@ -1,5 +1,6 @@
 # Backend-E-Commerce
 <<<<<<< HEAD
+<<<<<<< HEAD
            ##                Presentacion :
 La API cuenta con 5 rutas principales:
 **#####Register**
@@ -8,6 +9,8 @@ La API cuenta con 5 rutas principales:
 **#####Cart**
 **#####Payment**
  # Backend-E-Commerce
+=======
+>>>>>>> 3b2102e68fdda04b7c76933e63940c3ea454ce83
 =======
 >>>>>>> 3b2102e68fdda04b7c76933e63940c3ea454ce83
                           Presentacion :
@@ -47,7 +50,10 @@ nativeError: (Solo algunos request lo tienen)muestra el error completo.``
   "message": "Usuario registrado"
 }``
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 3b2102e68fdda04b7c76933e63940c3ea454ce83
 
 
                             LOGIN
@@ -144,6 +150,13 @@ Body:{
 
 
 
+<<<<<<< HEAD
+=======
+
+
+ 
+
+>>>>>>> 3b2102e68fdda04b7c76933e63940c3ea454ce83
 
 
  
@@ -246,4 +259,7 @@ Body:{
 =======
             
 
+<<<<<<< HEAD
+>>>>>>> 3b2102e68fdda04b7c76933e63940c3ea454ce83
+=======
 >>>>>>> 3b2102e68fdda04b7c76933e63940c3ea454ce83
