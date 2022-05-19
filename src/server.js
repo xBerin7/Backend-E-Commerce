@@ -2,9 +2,11 @@ const express = require('express')
 const { json } = require('express')
 const morgan = require('morgan')
 const ValidateToken = require('./middleware/ValidateToken.js')
+const cors = require('cors')
 
 const server = express()
 server.name = 'API-ECOMM'
+server.use(cors());
 
 server.use(json({ limit: '50mb' }))
 server.use(morgan('dev'))
