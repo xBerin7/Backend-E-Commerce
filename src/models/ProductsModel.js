@@ -25,6 +25,56 @@ const productSchema = new Schema({
     min: 5,
     max: 450
   },
+  amount:{
+    type:Number,
+    default:1
+  },
+  sizes:{
+    S:{
+      amount:{
+        type:Number,
+        default:1
+      }
+    },
+    M:{
+      amount:{
+        type:Number,
+        default:1
+      }
+    },
+    L:{
+      amount:{
+        type:Number,
+        default:1
+      }
+    },
+    XL:{
+      amount:{
+        type:Number,
+        default:1
+      }
+    },
+    XXL:{
+      amount:{
+        type:Number,
+        default:1
+      }
+    },
+    XXXL:{
+      amount:{
+        type:Number,
+        default:1
+      }
+    },
+    other:{
+      amount:{
+        type:Number,
+        default:1
+      }
+    },
+
+
+  },
   foto: {
     type: String
     // Pronto BETA TEST required//

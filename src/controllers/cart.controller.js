@@ -67,11 +67,15 @@ module.exports={
         if(!isCart)return res.json({error:true,message:"El carrito no existe"})
         const isProduct =await Product.findById({_id:req.body.productId})
         if(!isProduct)return res.json({error:true,message:"El producto no existe"})
+        if(isProduct.amount == 0)return res.json({error:true,message:"No hay stock"})
+        const totalPrice = await isCart?.products.map(e=>e.price).reduce((prev, curr) => prev + curr, 0)
+        console.log(totalPrice)
         await Product.findByIdAndUpdate(req.body.productId,{inCart:true})
+        await Product.findByIdAndUpdate(req.body.productId,{amount:isProduct.amount-1})
     
         try{
             await Cart.findByIdAndUpdate(req.body.cartId,{$push:{ products: isProduct }})
-            await Cart.findByIdAndUpdate(req.body.cartId,{$set:{ totalPrice: isCart.totalPrice + isProduct.price  }})
+            await Cart.findByIdAndUpdate(req.body.cartId,{$set:{ totalPrice: totalPrice  }})
             res.json({
                 error:false,
                 message:"Producto agregado"
