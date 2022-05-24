@@ -33,14 +33,13 @@ module.exports={
 
         },
         };
-      const response = await  axios.post(`${process.env.PAYPAL_API}/v2/checkout/orders`,order,{
+      const {data}= await  axios.post(`${process.env.PAYPAL_API}/v2/checkout/orders`,order,{
             headers:{
                 Authorization:`Bearer ${process.env.PAYPAL_TOKEN_API}`
             }
             
         })
-        console.log(response.data)
-        if(response.data.status == "CREATED")return res.json({error:false,message:"Orden de compra creada"})
+        if(data.status == "CREATED")return res.json({error:false,message:"Orden de compra creada",data:data.links[1]})
         else return (res.json({error:true,message:"Error al crear la orden de compra"}))
         
         

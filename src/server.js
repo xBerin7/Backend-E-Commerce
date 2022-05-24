@@ -6,7 +6,10 @@ const cors = require('cors')
 
 const server = express()
 server.name = 'API-ECOMM'
-server.use(cors());
+server.use(cors({
+  origin:'*'
+  //origin: 'http://localhost:3000'
+}));
 
 server.use(json({ limit: '50mb' }))
 server.use(morgan('dev'))
