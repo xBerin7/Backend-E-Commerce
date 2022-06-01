@@ -51,15 +51,20 @@ module.exports = {
     }
   },
   async getProductById (req, res) {
-    const productCheck = req.params.productId
+    const productCheck = req.params.id
     if(!productCheck)return res.json({error:true,message:"Introduce un id de producto"})
     try {
-      const productDB = await Product.findById({ _id: req.params.productId })
+      const productDB = await Product.findById({ _id: req.params.id })
+      const category = await Product.find({category:productDB.category})
+      console.log(category)
       if (productDB) {
         res.json({
           error: false,
           message: 'El producto ha sido encontrado!',
-          data: productDB
+          data: {
+            product:productDB,
+            category:category
+          }
         })
       }
     } catch (error) {
@@ -70,7 +75,27 @@ module.exports = {
       })
     }
   },
-
+  async getProductByCategory (req, res) {
+    const categoryCheck = req.params.category
+    console.log("Esta es la categoria",categoryCheck)
+    if(!categoryCheck)return res.json({error:true,message:"Introduce una categoria"})
+    try {
+      const categoryDB = await Product.find({ category:req.params.category })
+      if (categoryDB) {
+        res.json({
+          error: false,
+          message: 'La categoria  ha sido encontrado!',
+          data: categoryDB
+        })
+      }
+    } catch (error) {
+      res.json({
+        error: true,
+        message: 'Error al encontrar la categoria',
+        nativeError: error
+      })
+    }
+  },
   async editProduct (req, res) {
     const body = req.body
     if(!body)return res.json({error:true,message:"Introduce el producto editado"})
@@ -101,7 +126,7 @@ module.exports = {
       if (productDB) {
         res.json({
           error: false,
-          message: 'Editado correctamente'
+          message: 'Producto eliminado correctamente'
         })
       }
     } catch (error) {

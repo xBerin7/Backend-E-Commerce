@@ -33,43 +33,42 @@ const productSchema = new Schema({
     S:{
       amount:{
         type:Number,
-        default:1
       }
     },
     M:{
       amount:{
         type:Number,
-        default:1
+      
       }
     },
     L:{
       amount:{
         type:Number,
-        default:1
+      
       }
     },
     XL:{
       amount:{
         type:Number,
-        default:1
+   
       }
     },
     XXL:{
       amount:{
         type:Number,
-        default:1
+   
       }
     },
     XXXL:{
       amount:{
         type:Number,
-        default:1
+  
       }
     },
     other:{
       amount:{
         type:Number,
-        default:1
+    
       }
     },
 
