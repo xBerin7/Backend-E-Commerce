@@ -1,9 +1,10 @@
 const payment = require('express').Router()
 const paymentController = require('../controllers/payment.controller.js')
-const ValidateToken = require('../middleware/ValidateToken')
+const passport = require('passport')
+const {createOrder,captureOrder}= require('../controllers/payment.controller')
 
-payment.post('/createOrder',ValidateToken,paymentController.createOrder)
-payment.get('/captureOrder',ValidateToken,paymentController.captureOrder)
+payment.post('/createOrder',passport.authenticate('jwt',{session:false}),createOrder)
+payment.get('/captureOrder',passport.authenticate('jwt',{session:false}),captureOrder)
 //payment.post('/cancelOrder',ValidateToken,paymentController.cancelOrder)
 
 module.exports = payment

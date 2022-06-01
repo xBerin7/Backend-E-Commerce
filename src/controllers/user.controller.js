@@ -43,7 +43,8 @@ module.exports = {
     if (!validPassword) return res.status(400).json({ error: true, message: 'Contraseña no valida', nativeError: error })
 
     const token = jwt.sign({
-      userEmail: email
+      id:user._id,
+      email:user.email,
     }, process.env.TOKEN_SECRET,{expiresIn:"24h"})
 
     res.json({

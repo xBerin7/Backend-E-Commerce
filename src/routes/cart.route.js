@@ -1,11 +1,11 @@
 const cart = require('express').Router()
 const cartController = require('../controllers/cart.controller.js')
-const ValidateToken = require('../middleware/ValidateToken')
+const passport = require('passport')
 
 
-cart.post('/', ValidateToken,cartController.getCart)
-cart.post('/create',ValidateToken,cartController.createCart)
-cart.post('/add',ValidateToken,cartController.updateCart)
-cart.post('/delete',ValidateToken,cartController.deleteProductCart)
+cart.post('/', passport.authenticate('jwt',{session:false}),cartController.getCart)
+cart.post('/create',passport.authenticate('jwt',{session:false}),cartController.createCart)
+cart.post('/add',passport.authenticate('jwt',{session:false}),cartController.updateCart)
+cart.post('/delete',passport.authenticate('jwt',{session:false}),cartController.deleteProductCart)
 
 module.exports = cart

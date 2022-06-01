@@ -51,10 +51,10 @@ module.exports = {
     }
   },
   async getProductById (req, res) {
-    const productCheck = req.params.id
+    const productCheck = req.params.productId
     if(!productCheck)return res.json({error:true,message:"Introduce un id de producto"})
     try {
-      const productDB = await Product.findById({ _id: req.params.id })
+      const productDB = await Product.findById({ _id: req.params.productId })
       if (productDB) {
         res.json({
           error: false,
