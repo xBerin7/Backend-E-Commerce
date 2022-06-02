@@ -37,15 +37,18 @@ module.exports={
         const cartExist = await Cart.findOne({iduser:req.body.iduser})
         if(cartExist) return res.json({error:true,message:"El carrito ya existe"})
         const userExist = await User.findOne({ _id:req.body.iduser })
-        console.log("Datos del usuarios",userExist)
         if (!userExist) return res.json({ error: true, message: 'El usuario no existe' })
         if(userExist.idcart < 5)return res.json({ error: true, message:"El usuario ya tiene carrito"})
         const cartDB = new Cart({
             iduser:req.body.iduser
-        }) 
+        })
+        
         try {
-          const cartInDB = await  cartDB.save()
-           await User.findByIdAndUpdate(req.body.iduser,{idcart:cartInDB.ObjectId})
+            const cartInDB = await  cartDB.save()
+            console.log(cartInDB._id)
+            const updateUser= await User.findByIdAndUpdate(
+            req.body.iduser,{$set:{ idcart: cartInDB._id  }}, { useFindAndModify: false }
+             )
             res.json({
                 error:false,
                 message:"Se creo el carrito",

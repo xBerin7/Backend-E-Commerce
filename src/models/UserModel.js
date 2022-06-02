@@ -34,7 +34,7 @@ const userSchema = new Schema({
     minleght: 20
   },
   idcart:{
-    type:Number,
+    type: String,
     default:666
   },
   date: {
