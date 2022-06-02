@@ -101,14 +101,15 @@ module.exports = {
     if(!body)return res.json({error:true,message:"Introduce el producto editado"})
     const productCheck = req.params.id
     if(!productCheck)return res.json({error:true,message:"Introduce un id de producto"})
-    
     try {
-      const productDB = await Product.FindByIdAndUpdate(
-        req.params.id, body, { useFindAndModify: false }
-      )
+      const productDB = await Product.findByIdAndUpdate(
+        req.params.id, req.body, { useFindAndModify: false }
+     )
+     console.log(productDB)
       res.json({
         error: false,
-        message: 'Producto editado correctamente'
+        message: 'Producto editado correctamente',
+        data:`El producto con id ${productDB._id} fue editado`
       })
     } catch (error) {
       res.json({

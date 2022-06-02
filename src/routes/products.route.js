@@ -7,6 +7,7 @@ products.get('/:id', productsController.getProductById)
 products.get('/category/:category',productsController.getProductByCategory)
 products.post('/create',ValidateAdmin ,productsController.createProduct)
 products.put('/edit/:id', ValidateAdmin,productsController.editProduct)
+products.delete('/delete/:id', ValidateAdmin,productsController.deleteProduct)
 
 
 module.exports = products
