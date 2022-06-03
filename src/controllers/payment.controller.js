@@ -2,6 +2,7 @@ const axios = require('axios')
 require('dotenv').config()
 const Cart = require('../models/CartModel')
 const Product = require ('../models/ProductsModel')
+const Order = require('../models/OrderModel')
 module.exports={
     async createOrder(req,res){
         console.log(req.body)

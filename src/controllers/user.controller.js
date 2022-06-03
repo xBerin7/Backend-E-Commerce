@@ -14,8 +14,8 @@ const validateLogin = Joi.object({
 
 //! MOVER A HELPERS
 const schemaRegister = Joi.object({
-  name: Joi.string().min(6).max(23).required(),
-  lastname: Joi.string().min(6).max(23).required(),
+  name: Joi.string().min(3).max(23).required(),
+  lastname: Joi.string().min(3).max(23).required(),
   email: Joi.string().max(120).email().required(),
   password: Joi.string().min(6).max(25).required(),
   cp: Joi.string().min(2).max(10)

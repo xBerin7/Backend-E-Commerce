@@ -9,13 +9,13 @@ const userSchema = new Schema({
   name: {
     type: String,
     required: true,
-    min: 6,
+    min: 3,
     max: 255
   },
   lastname: {
     type: String,
     required: true,
-    min: 6,
+    min: 3,
     max: 255
   },
   email: {
@@ -33,6 +33,22 @@ const userSchema = new Schema({
     type: String,
     minleght: 20
   },
+  address:[
+    { 
+      fullname:String,
+      state:String,
+      city:String,
+      street:String,
+      number:Number,
+      optional:{
+        floor: Number,
+        departament:Number
+      },
+      zipcode: Number,
+      cellphone:Number,
+      note:String
+    }
+  ],
   idcart:{
     type: String,
     default:666
