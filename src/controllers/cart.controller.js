@@ -32,24 +32,24 @@ module.exports={
     
     },
     async createCart(req,res){
-        const userCheck = req.body.iduser
-        if(!userCheck)return res.json({error:true,message:"Introduce un id de usuario"})
-        const cartExist = await Cart.findOne({iduser:req.body.iduser})
-        if(cartExist) return res.json({error:true,message:"El carrito ya existe"})
-        const userExist = await User.findOne({ _id:req.body.iduser })
-        if (!userExist) return res.json({ error: true, message: 'El usuario no existe' })
-        if(userExist.idcart < 5)return res.json({ error: true, message:"El usuario ya tiene carrito"})
+        const userCheck = req
+        if(!userCheck)return ({error:true,message:"Introduce un id de usuario"})
+        const cartExist = await Cart.findOne({iduser:userCheck})
+        if(cartExist) return ({error:true,message:"El carrito ya existe"})
+        const userExist = await User.findOne({ _id:userCheck })
+        if (!userExist) return ({ error: true, message: 'El usuario no existe' })
+        if(userExist.idcart < 5)return({ error: true, message:"El usuario ya tiene carrito"})
         const cartDB = new Cart({
-            iduser:req.body.iduser
+            iduser:userCheck
         })
         
         try {
             const cartInDB = await  cartDB.save()
             console.log(cartInDB._id)
             const updateUser= await User.findByIdAndUpdate(
-            req.body.iduser,{$set:{ idcart: cartInDB._id  }}, { useFindAndModify: false }
+            userCheck,{$set:{ idcart: cartInDB._id  }}, { useFindAndModify: false }
              )
-            res.json({
+            return({
                 error:false,
                 message:"Se creo el carrito",
                 data:{
@@ -57,7 +57,7 @@ module.exports={
                 }
             })
         } catch (error) {
-            res.json({error:true,message:"Error al crear el carrito",nativeError:error})
+            return({error:true,message:"Error al crear el carrito",nativeError:error})
         }
     
     },
@@ -70,15 +70,19 @@ module.exports={
         if(!isCart)return res.json({error:true,message:"El carrito no existe"})
         const isProduct =await Product.findById({_id:req.body.productId})
         if(!isProduct)return res.json({error:true,message:"El producto no existe"})
-        //if(isProduct.amount == 0)return res.json({error:true,message:"No hay stock"})
+        if(isProduct.amount > 0)return res.json({error:true,message:"No hay stock"})
         const cartUpdated= await Cart.findByIdAndUpdate(req.body.cartId,{$push:{ products: isProduct }})
         console.log(await cartUpdated)
         await Product.findByIdAndUpdate(req.body.productId,{inCart:true})
         await Product.findByIdAndUpdate(req.body.productId,{amount:isProduct.amount-1})
 
         try{
+            if(isProduct.isOffert==false){
             let totalPrice = await cartUpdated.products.map(e=>e.price).reduce((prev, curr) => prev + curr, isProduct.price)
-
+            }
+            else{
+            let totalPrice = await cartUpdated.products.map(e=>e.price).reduce((prev, curr) => prev + curr, isProduct.alternativePrice)
+            }
             await Cart.findByIdAndUpdate(req.body.cartId,{$set:{totalPrice: totalPrice}})
 
             

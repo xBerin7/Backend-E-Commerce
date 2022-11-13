@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const STATUS = require('../utils/status')
 const User = require('../models/UserModel')
+const {createCart}=(require('../controllers/cart.controller'))
 
 //! MOVER A HELPERS
 const validateLogin = Joi.object({
@@ -78,7 +79,8 @@ module.exports = {
       cp:req.body.cp
     })
     try {
-      await userDB.save()
+      const userInDB =await userDB.save()
+      await createCart(userInDB._id,res)
       console.log(`Usuario nuevo registrado:${userDB}`)
       res.json({
         error: false,
