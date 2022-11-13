@@ -78,12 +78,13 @@ module.exports={
 
         try{
             if(isProduct.isOffert==false){
-            let totalPrice = await cartUpdated.products.map(e=>e.price).reduce((prev, curr) => prev + curr, isProduct.price)
+            let totalPriceNormal = await cartUpdated.products.map(e=>e.price).reduce((prev, curr) => prev + curr, isProduct.price)
+            await Cart.findByIdAndUpdate(req.body.cartId,{$set:{totalPrice: totalPriceNormal}})
+            }else{
+                let totalPriceOffert = await cartUpdated.products.map(e=>e.price).reduce((prev, curr) => prev + curr, isProduct.price)
+                await Cart.findByIdAndUpdate(req.body.cartId,{$set:{totalPrice: totalPriceOffert}})
             }
-            else{
-            let totalPrice = await cartUpdated.products.map(e=>e.price).reduce((prev, curr) => prev + curr, isProduct.alternativePrice)
-            }
-            await Cart.findByIdAndUpdate(req.body.cartId,{$set:{totalPrice: totalPrice}})
+            
 
             
             res.json({
@@ -107,11 +108,12 @@ module.exports={
         if(!productCheck)return res.json({error:true,message:"Introduce un id de producto"})
         const collection= await Cart.findById({_id:req.body.cartId})
         if(!collection) return res.json({ error: true, message:"El carrito no existe"})
-        const productToRemove = await collection.products.findOneAndDelete(producto =>producto.id== req.body.productId)
-        if(!productToRemove)return res.json({error:true,message:"No se pudo remover el producto"})
+        const productInDB = await Product.findById({_id:productCheck})
             try{
-            await Cart.findByIdAndUpdate(req.body.cartId,{$set:{ totalPrice: collection.totalPrice - productToRemove.price  }})
+            await Cart.findByIdAndUpdate(req.body.cartId,{$set:{ totalPrice: collection.totalPrice - productInDB.price  }})
+            const productToRemove = await Cart.findByIdAndUpdate({_id:cartCheck},{$pull:{products:{_id:productCheck}}})
             await collection.products.pull(productToRemove)
+            
             savedDocument = collection.save()
            await Product.findByIdAndUpdate(req.body.productId,{inCart:false})
         

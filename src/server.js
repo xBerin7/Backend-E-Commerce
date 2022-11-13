@@ -22,13 +22,7 @@ server.use(
     cookie: { maxAge: 1000 * 60 * 60 * 24 }
   })
 )
-/*/session({
-  secret:process.env.API_SECRET,
-  resave:true,
-  saveUninitialized:true,
-  store:MongoStore.create({ mongoUrl: process.env.DB_URI }),
-  cookie: { maxAge: 1000 * 60 * 60 * 24 ,httpOnly:true}
-})/*/
+
 server.use(passport.initialize())
 server.use(passport.session())
 server.use(json({ limit: '50mb' }))

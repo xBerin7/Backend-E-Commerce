@@ -26,9 +26,7 @@ const schemaRegister = Joi.object({
 module.exports = {
   async userLogin (req, res) {
     const { email, password } = req.body
-    if(!email)return res.status(400).json({error: true,message:"Introduce un email"})
-    if(!password)return res.status(400).json({error: true,message:"Introduce un password"})
-    
+    if(!email && !password)return res.status(400).json({error: true,message:"Ingrese correctamente los datos"})
     const { error } = validateLogin.validate(req.body)
     if (error) {
       return res.status(STATUS.BAD_REQUEST).json({
@@ -53,7 +51,8 @@ module.exports = {
       message: 'Usuario logeado correctamente',
       data: {
         token,
-        iduser:user._id
+        iduser:user._id,
+        cartId:user.idcart
       }
     })
   },

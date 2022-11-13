@@ -11,7 +11,6 @@ const carritoSchema = new Schema(
     products: [
       {
         productId: Number,
-        amount: Number,
         title: String,
         price: Number
       }
