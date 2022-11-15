@@ -86,9 +86,9 @@ const productSchema = new Schema({
   alternativePrice: {
     type: Number
   },
-  inCart:{
-    type:Boolean,
-    default:false
+  inCartOf:{
+    type:Number,
+    default:0
   },
   isOffert: {
     type: Boolean,

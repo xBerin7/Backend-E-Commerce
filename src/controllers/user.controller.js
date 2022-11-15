@@ -1,32 +1,19 @@
-const Joi = require('joi')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const STATUS = require('../utils/status')
 const User = require('../models/UserModel')
 const {createCart}=(require('../controllers/cart.controller'))
+const {validateLogin,schemaRegister}=(require('../utils/validators.util'))
 
-//! MOVER A HELPERS
-const validateLogin = Joi.object({
-  email: Joi.string().max(120).email(),
-  password: Joi.string().min(6).max(25).required()
-})
 
-//! MOVER A HELPERS
-
-//! MOVER A HELPERS
-const schemaRegister = Joi.object({
-  name: Joi.string().min(3).max(23).required(),
-  lastname: Joi.string().min(3).max(23).required(),
-  email: Joi.string().max(120).email().required(),
-  password: Joi.string().min(6).max(25).required(),
-  cp: Joi.string().min(2).max(10)
-})
-//! MOVER A HELPERS
 
 module.exports = {
+
+  //Inicio de sesion//
+
   async userLogin (req, res) {
     const { email, password } = req.body
-    if(!email && !password)return res.status(400).json({error: true,message:"Ingrese correctamente los datos"})
+    if(!email && !password)return res.status(STATUS.BAD_REQUEST).json({error: true,message:"Ingrese correctamente los datos"})
     const { error } = validateLogin.validate(req.body)
     if (error) {
       return res.status(STATUS.BAD_REQUEST).json({
@@ -36,17 +23,17 @@ module.exports = {
       })
     }
     const user = await User.findOne({ email })
-    if (!user) return res.status(400).json({ error: true, message: 'Usuario no encontrado', nativeError: error })
+    if (!user) return res.status(STATUS.BAD_REQUEST).json({ error: true, message: 'Usuario no encontrado', nativeError: error })
 
     const validPassword = await bcrypt.compare(password, user.password)
-    if (!validPassword) return res.status(400).json({ error: true, message: 'Contraseña no valida', nativeError: error })
+    if (!validPassword) return res.status(STATUS.BAD_REQUEST).json({ error: true, message: 'Contraseña no valida', nativeError: error })
 
     const token = jwt.sign({
       id:user._id,
       email:user.email,
     }, process.env.TOKEN_SECRET,{expiresIn:"24h"})
 
-    res.json({
+    res.status(STATUS.OK).json({
       error: false,
       message: 'Usuario logeado correctamente',
       data: {
@@ -56,6 +43,9 @@ module.exports = {
       }
     })
   },
+
+//Registro de usuarios//
+
   async userRegister (req, res) {
     const { error } = schemaRegister.validate(req.body)
     if (error) {
@@ -79,14 +69,16 @@ module.exports = {
     })
     try {
       const userInDB =await userDB.save()
+      //Creacion del carrito del usuario//
       await createCart(userInDB._id,res)
+      //                               //
       console.log(`Usuario nuevo registrado:${userDB}`)
-      res.json({
+      res.status(STATUS.OK).json({
         error: false,
         message: 'Usuario registrado'
       })
     } catch (error) {
-      res.json({
+      res.status(STATUS.BAD_REQUEST).json({
         error: true,
         message: 'Error al registrar el usuario',
         nativeError: error
