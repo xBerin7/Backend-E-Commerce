@@ -9,7 +9,7 @@ module.exports={
             message:"Introduzca el id del usuario correctamente"
         })
         const userInDB =await  User.findById({_id:req.body.iduser})
-        if(!userInDB.address)return res.status(STATUS.BAD_REQUEST).json({
+        if(!userInDB.address[0])return res.status(STATUS.BAD_REQUEST).json({
             error:true,
             message:"El usuario no cuenta con datos del envio"
         })
@@ -24,7 +24,7 @@ module.exports={
         const orderUpdated= await newOrder.save()
         try {
            const updateUser= await User.findByIdAndUpdate(
-            req.body.iduser,{$set:{ orderId:orderUpdated._id}}, { useFindAndModify: false }
+            req.body.iduser,{$push:{ ordersId:orderUpdated._id}}, { useFindAndModify: false }
              )
             res.status(STATUS.OK).json({
                 error:false,
@@ -43,17 +43,12 @@ module.exports={
 
 
     async updateOrder(req,res){
-        if(!req.body.iduser)return res.status(STATUS.BAD_REQUEST).json({
+        if(!req.body.iduser && !req.body.orderId)return res.status(STATUS.BAD_REQUEST).json({
             error:true,
             message:"Introduzca el id del usuario correctamente"
         })  
-        const userInDB= await User.findById({_id:req.body.iduser})
-        if(!userInDB)return res.status(STATUS.BAD_REQUEST).json({
-            error:true,
-            message:"El usuario no existe"
-        })
         try {
-            await Order.findByIdAndUpdate(userInDB.orderId,req.body,{ useFindAndModify: false })
+            await Order.findByIdAndUpdate(req.body.orderId,req.body,{ useFindAndModify: false })
             return res.status(STATUS.OK).json({
                 error:false,
                 message:"Orden actualizada"
