@@ -53,6 +53,10 @@ const userSchema = new Schema({
     type: String,
     default:666
   },
+  orderId:{
+    type:String,
+    default:6969
+  },
   date: {
     type: Date,
     default: Date.now

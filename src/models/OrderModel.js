@@ -8,17 +8,9 @@ const orderSchema = new Schema(
     cartId:{
         type:String
     },
-    inRoute:{
-      type:Boolean
+    statement:{
+      type:String
     },
-    products: [
-      {
-        productId: Number,
-        amount: Number,
-        title: String,
-        price: Number
-      }
-    ],
     details:[
       { 
         fullname:String,
