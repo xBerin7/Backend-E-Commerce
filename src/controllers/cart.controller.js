@@ -81,10 +81,7 @@ module.exports={
     async updateCart(req,res){
         if(!req.body.cartId && !req.body.productId)return res.status(STATUS.BAD_REQUEST).json({
             error:true,
-            message:"Introduce un id de carrito"})
-        if(!req.body.productId)return res.status(STATUS.BAD_REQUEST).json({
-            error:true,
-            message:"Introduce un id del producto"})
+            message:"Introduzca correctamente los datos"})
         const isACart= await Cart.findById({_id:req.body.cartId})
         if(!isACart)return res.status(STATUS.BAD_REQUEST).json({
             error:true,
